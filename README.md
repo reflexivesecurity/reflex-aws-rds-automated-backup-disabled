@@ -11,7 +11,7 @@ To use this rule either add it to your `reflex.yaml` configuration file:
 ```
 rules:
   aws:
-    - reflex-aws-rds-automated-backup-disabled:
+    - rds-automated-backup-disabled:
         version: latest
 ```
 
