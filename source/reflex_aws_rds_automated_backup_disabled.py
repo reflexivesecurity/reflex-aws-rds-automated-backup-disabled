@@ -16,7 +16,9 @@ class RDSAutomatedBackupDisabled(AWSRule):
     def extract_event_data(self, event):
         """ Extract required event data """
         self.instance_id = event["detail"]["requestParameters"]["dBInstanceIdentifier"]
-        self.backup_retention_period = event["detail"]["requestParameters"]["backupRetentionPeriod"]
+        self.backup_retention_period = event["detail"]["requestParameters"][
+            "backupRetentionPeriod"
+        ]
 
     def resource_compliant(self):
         """
@@ -28,14 +30,17 @@ class RDSAutomatedBackupDisabled(AWSRule):
 
     def get_remediation_message(self):
         """ Returns a message about the remediation action that occurred """
-        return f"The RDS instance {self.instance_id} has had automated backups disabled."
+        return (
+            f"The RDS instance {self.instance_id} has had automated backups disabled."
+        )
 
 
 def lambda_handler(event, _):
     """ Handles the incoming event """
     print(event)
-    if subscription_confirmation.is_subscription_confirmation(event):
-        subscription_confirmation.confirm_subscription(event)
+    event_payload = json.loads(event["Records"][0]["body"])
+    if subscription_confirmation.is_subscription_confirmation(event_payload):
+        subscription_confirmation.confirm_subscription(event_payload)
         return
-    rule = RDSAutomatedBackupDisabled(json.loads(event["Records"][0]["body"]))
+    rule = RDSAutomatedBackupDisabled(event_payload)
     rule.run_compliance_rule()
