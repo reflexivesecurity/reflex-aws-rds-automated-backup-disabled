@@ -17,7 +17,7 @@ module "sqs_lambda" {
   "Statement": [
     {
       "Action": [
-        "rds:ModifyDBInstance",
+        "rds:ModifyDBInstance"
       ],
       "Effect": "Allow",
       "Resource": "*"
