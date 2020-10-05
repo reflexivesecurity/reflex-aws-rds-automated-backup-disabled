@@ -10,6 +10,9 @@ from reflex_core import AWSRule, subscription_confirmation
 class RDSAutomatedBackupDisabled(AWSRule):
     """ Rule to detect the disabling of automated backups."""
 
+
+    client = boto3.client("rds")
+
     def __init__(self, event):
         super().__init__(event)
 
@@ -28,6 +31,17 @@ class RDSAutomatedBackupDisabled(AWSRule):
         """
         return self.backup_retention_period != 0
 
+    def remediate(self):
+        """ Fix the non-compliant resource """
+        self.set_backup_retention_period()
+
+
+    def set_backup_retention_period(self):
+        """Function to remdiate backup retention != 0"""
+        self.client.modify_db_instance(
+            DBInstanceIdentifier=self.instance_id,
+            BackupRetentionPeriod=7
+        )
     def get_remediation_message(self):
         """ Returns a message about the remediation action that occurred """
         return (
