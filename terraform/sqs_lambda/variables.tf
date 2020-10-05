@@ -18,6 +18,12 @@ variable "cloudwatch_event_rule_arn" {
   type        = string
 }
 
+variable "mode" {
+  description = "The mode that the Rule will operate in. Valid choices: DETECT | REMEDIATE"
+  type        = string
+  default     = "detect"
+}
+
 variable "package_location" {
   description = "Path for the Lambda deployment package"
   type        = string
