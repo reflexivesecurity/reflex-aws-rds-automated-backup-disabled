@@ -7,7 +7,7 @@ module "assume_role" {
   "Statement": [
     {
       "Action": [
-        "rds:ModifyDBInstance",
+        "rds:ModifyDBInstance"
       ],
       "Effect": "Allow",
       "Resource": "*"
