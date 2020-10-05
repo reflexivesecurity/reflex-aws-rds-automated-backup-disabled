@@ -8,8 +8,8 @@ module "sqs_lambda" {
   handler                   = "reflex_aws_rds_automated_backup_disabled.lambda_handler"
   lambda_runtime            = "python3.7"
   environment_variable_map = {
-    SNS_TOPIC = var.sns_topic_arn,
-
+    SNS_TOPIC                = var.sns_topic_arn,
+    DEFAULT_BACKUP_RETENTION = var.default_backup_retention
   }
   custom_lambda_policy = <<EOF
 {

@@ -24,6 +24,12 @@ variable "mode" {
   default     = "detect"
 }
 
+variable "default_backup_retention" {
+  description = "Days of retention in case retention set to zero."
+  type        = number
+  default     = 7
+}
+
 variable "package_location" {
   description = "Path for the Lambda deployment package"
   type        = string
