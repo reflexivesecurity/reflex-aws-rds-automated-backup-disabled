@@ -18,9 +18,6 @@ class RDSAutomatedBackupDisabled(AWSRule):
     def extract_event_data(self, event):
         """ Extract required event data """
         self.instance_id = event["detail"]["requestParameters"]["dBInstanceIdentifier"]
-        self.apply_immediately_requested = event["detail"]["requestParameters"].get(
-            "ApplyImmediately"
-        )
         self.backup_retention_period = event["detail"]["requestParameters"][
             "backupRetentionPeriod"
         ]
@@ -40,14 +37,9 @@ class RDSAutomatedBackupDisabled(AWSRule):
 
     def set_backup_retention_period(self):
         """Function to reset a backup retention period to default time"""
-        apply_immediately = False
-        if self.apply_immediately_requested:
-            apply_immediately = True
-
         self.client.modify_db_instance(
             DBInstanceIdentifier=self.instance_id,
-            BackupRetentionPeriod=int(self.default_backup_retention),
-            ApplyImmediately=apply_immediately,
+            BackupRetentionPeriod=int(self.default_backup_retention)
         )
 
     def get_remediation_message(self):
