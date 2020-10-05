@@ -46,7 +46,7 @@ class RDSAutomatedBackupDisabled(AWSRule):
 
         self.client.modify_db_instance(
             DBInstanceIdentifier=self.instance_id,
-            BackupRetentionPeriod=self.default_backup_retention,
+            BackupRetentionPeriod=int(self.default_backup_retention),
             ApplyImmediately=apply_immediately,
         )
 
