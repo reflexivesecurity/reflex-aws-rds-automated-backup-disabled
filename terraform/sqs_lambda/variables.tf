@@ -27,7 +27,7 @@ variable "mode" {
 variable "default_backup_retention" {
   description = "Days of retention in case retention set to zero."
   type        = number
-  default     = 7
+  default     = 1
 }
 
 variable "package_location" {

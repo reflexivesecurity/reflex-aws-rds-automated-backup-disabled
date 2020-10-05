@@ -9,6 +9,7 @@ module "sqs_lambda" {
   lambda_runtime            = "python3.7"
   environment_variable_map = {
     SNS_TOPIC                = var.sns_topic_arn,
+    MODE                     = var.mode
     DEFAULT_BACKUP_RETENTION = var.default_backup_retention
   }
   custom_lambda_policy = <<EOF
